@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="OpenFLStage3DTest" package="wighawag.test.stage3d" version="1.0.0" company="Wighawag" />
+    <app main="Main" path="target/openfl" file="OpenFLStage3DTest" />
+
+    <window width="800" height="600" if="desktop" />
+    <window fps="60" />
+
+	<set name="SWF_VERSION" value="11.2" />
+	
+	<source path="source" />
+	
+	<haxelib name="openfl"/>
+	
+    <assets path="assets" exclude="nme.svg"/>
+
+	<icon path="assets/nme.svg" />
+    
+     <haxelib name="openfl-stage3d" />
+     <!--<haxelib name="openfl-stage3d" version="0.0.1"/>-->
+
+</project>
