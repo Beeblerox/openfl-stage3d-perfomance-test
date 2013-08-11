@@ -1,4 +1,4 @@
-package ;
+package;
 
 import flash.display.Sprite;
 import flash.display.Stage3D;
@@ -39,6 +39,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+		
 		if (stage != null) init(0);
 		else addEventListener(Event.ADDED_TO_STAGE, init);
 		

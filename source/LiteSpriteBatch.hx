@@ -45,7 +45,6 @@ class LiteSpriteBatch
 	
 	public function new(context3D:Context3D, spriteSheet:LiteSpriteSheet)
 	{
-	//	_context3D = context3D;
 		_sprites = spriteSheet;
 		
 		_verteces = new Vector<Float>();
@@ -157,19 +156,8 @@ class LiteSpriteBatch
 				vTexCoord = uv;
 				vTexAlpha = vertexPosition.z;
 			}";
-		/*
-		vertexShaderAssembler.assemble( Context3DProgramType.VERTEX,
-			"dp4 op.x, va0, vc0 \n"+ // transform from stream 0 to output clipspace
-			"dp4 op.y, va0, vc1 \n"+ // do the same for the y coordinate
-			"mov op.z, vc2.z    \n"+ // we don't need to change the z coordinate
-			"mov op.w, vc3.w    \n"+ // unused, but we need to output all data
-			"mov v0, va1.xy     \n"+ // copy UV coords from stream 1 to fragment program
-			"mov v0.z, va0.z"  // copy alpha from stream 0 to fragment program
-		);
-		*/	
-        var vertexAgalInfo = '{"varnames":{"uv":"va1","modelViewMatrix":"vc0","vertexPosition":"va0"},"agalasm":"dp4 op.x, va0, vc0\\ndp4 op.y, va0, vc1\\nmov op.z, vc2.z\\nmov op.w, vc3.w\\nmov v0, va1.xy\\nmov v0.z, va0.z","storage":{},"types":{},"info":"","consts":{}}';
 		
-		// m44 vt0, va0, vc0\\nm44 op, vt0, vc4\\nmov v0, va1
+        var vertexAgalInfo = '{"varnames":{"uv":"va1","modelViewMatrix":"vc0","vertexPosition":"va0"},"agalasm":"dp4 op.x, va0, vc0\\ndp4 op.y, va0, vc1\\nmov op.z, vc2.z\\nmov op.w, vc3.w\\nmov v0, va1.xy\\nmov v0.z, va0.z","storage":{},"types":{},"info":"","consts":{}}';
 		
 		var fragmentShaderSource =
 			"varying vec2 vTexCoord;
@@ -179,17 +167,8 @@ class LiteSpriteBatch
 		        vec4 texColor = texture2D(texture, vTexCoord);
 				gl_FragColor = texColor * vec4(1.0, 1.0, 1.0, vTexAlpha);
 			}";
-		/*
-		fragmentShaderAssembler.assemble( Context3DProgramType.FRAGMENT,
-			"tex ft0, v0, fs0 <2d,clamp,linear,mipnearest> \n"+ // sample the texture
-			"mul ft0, ft0, v0.zzzz\n" + // multiply by the alpha transparency
-			"mov oc, ft0" // output the final pixel color
-		);
-		*/	
-		// TODO: add "mipnearest" option into fragmentAgalInfo
-        var fragmentAgalInfo = '{"varnames":{"texture":"fs0"},"agalasm":"tex ft0, v0, fs0 <2d,clamp,linear,mipnearest>\\nmul ft0, ft0, v0.zzzz\\nmov oc, ft0","storage":{},"types":{},"info":"","consts":{}}';
 		
-		//mov ft0, v0\\ntex ft1, ft0, fs0 <2d,wrap,linear>\\nmov oc, ft1
+        var fragmentAgalInfo = '{"varnames":{"texture":"fs0"},"agalasm":"tex ft0, v0, fs0 <2d,clamp,linear,mipnearest>\\nmul ft0, ft0, v0.zzzz\\nmov oc, ft0","storage":{},"types":{},"info":"","consts":{}}';
 		
         var vertexShader = new GLSLVertexShader(vertexShaderSource, vertexAgalInfo);
         var fragmentShader = new GLSLFragmentShader(fragmentShaderSource, fragmentAgalInfo);
