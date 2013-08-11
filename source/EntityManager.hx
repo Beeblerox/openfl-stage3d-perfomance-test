@@ -96,10 +96,6 @@ class EntityManager
 			}
 		}
 		// egyet sem találtumk, így létrehozunk egyet
-		/*
-		var sprite:LiteSprite = batch.createChild(sprID);
-		anEntity = new Entity(sprite);
-		//*/
 		anEntity = new Entity(batch.createChild(sprID));
 		entityPool.push(anEntity);
 		numCreated++;

@@ -20,15 +20,24 @@ class LiteSpriteStage
 	
 	public var rect(get, set):Rectangle;
 	private var _batches:Vector<LiteSpriteBatch>;
-	public var _modelViewMatrix(get, null):Matrix3D;
+	private var _modelViewMatrix:Matrix3D;
+	public var modelViewMatrix(get, null):Matrix3D;
 	
 	public function new(stage3D:Stage3D, context3D:Context3D, rect:Rectangle)
 	{
 		_stage3D = stage3D;
-		_context3D = context3D;
 		_batches = new Vector<LiteSpriteBatch>();
-		
+		onContext(context3D);
 		this.rect = rect;
+	}
+	
+	public function onContext(context3D:Context3D):Void
+	{
+		_context3D = context3D;
+		for (batch in _batches)
+		{
+			batch.onContext(context3D);
+		}
 	}
 	
 	private function get_rect():Rectangle { return _rect; }
@@ -46,7 +55,7 @@ class LiteSpriteStage
 		return (_rect = rect);
 	}
 	
-	private function get__modelViewMatrix():Matrix3D { return _modelViewMatrix; }
+	private function get_modelViewMatrix():Matrix3D { return _modelViewMatrix; }
 	
 	public function configureBackBuffer(width:Float, height:Float):Void
 	{

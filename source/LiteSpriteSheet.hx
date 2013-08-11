@@ -1,4 +1,5 @@
-package ;
+package;
+
 import flash.display.BitmapData;
 import flash.display3D.Context3D;
 import flash.display3D.Context3DTextureFormat;
@@ -11,7 +12,6 @@ import flash.Vector;
  * ...
  * @author Hortobágyi Tamás
  */
-
 class LiteSpriteSheet
 {
 	public var texture:Texture;
@@ -76,11 +76,14 @@ class LiteSpriteSheet
 	 */
 	public function uploadTexture(context3D:Context3D):Void
 	{
-		if (texture == null) texture = context3D.createTexture(spriteSheet.width, spriteSheet.height, Context3DTextureFormat.BGRA, false);
+		if (texture != null) 
+		{
+			texture.dispose();
+		}
 		
+		texture = context3D.createTexture(spriteSheet.width, spriteSheet.height, Context3DTextureFormat.BGRA, false);
 		texture.uploadFromBitmapData(spriteSheet);
 		
-		#if flash
 		// generate mipmaps
 		var currentWidth:Int = spriteSheet.width >> 1;
 		var currentHeight:Int = spriteSheet.height >> 1;
@@ -96,6 +99,5 @@ class LiteSpriteSheet
 			currentWidth >>= 1;
 			currentHeight >>= 1;
 		}
-		#end
 	}
 }

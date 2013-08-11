@@ -26,7 +26,7 @@ class Main extends Sprite
 	private var _entities:EntityManager;
 	private var _spriteStage:LiteSpriteStage;
 	private var _gui:GameGUI;
-	var stage3D:Stage3D;
+	private var stage3D:Stage3D;
 	public static var _width:Float = 600;
 	public static var _height:Float = 400;
 	public var context3D:Context3D;
@@ -57,12 +57,12 @@ class Main extends Sprite
 		addChild(_gui);
 		
 		stage3D = stage.getStage3D(0);
-		stage3D.addEventListener(Event.CONTEXT3D_CREATE, onContext3DCrate);
+		stage3D.addEventListener(Event.CONTEXT3D_CREATE, onContext3DCreate);
 		stage3D.addEventListener(ErrorEvent.ERROR, errorHandler);
 		stage3D.requestContext3D();
 	}
 	
-	private function onContext3DCrate(e:Event):Void
+	private function onContext3DCreate(e:Event):Void
 	{
 		context3D = stage3D.context3D;
 		initSpriteEngine();
@@ -75,6 +75,12 @@ class Main extends Sprite
 	
 	private function onResizeEvent(e:Event):Void
 	{
+		if (stage3D.context3D != null)
+		{
+			context3D = stage3D.context3D;
+			_spriteStage.onContext(context3D);
+		}
+		
 		// Korrekt méret beállítása
 		_width = stage.stageWidth;
 		_height = stage.stageHeight;

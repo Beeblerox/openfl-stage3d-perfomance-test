@@ -13,7 +13,6 @@ class LiteSprite
 	public var parent:LiteSpriteBatch;
 	public var spriteId:UInt;
 	public var childId:UInt;
-	//public var pos(getPosition, setPosition):Point;
 	public var pos:Point;
 	public var visible:Bool;
 	public var scaleX:Float;

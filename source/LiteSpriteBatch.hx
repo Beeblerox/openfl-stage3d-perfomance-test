@@ -40,13 +40,12 @@ class LiteSpriteBatch
 	private var _indexBuffer:IndexBuffer3D;
 	private var _vertexBuffer:VertexBuffer3D;
 	private var _uvBuffer:VertexBuffer3D;
-	//private var _shader:Program3D;
-	private var sceneProgram : GLSLProgram;
-	private var _updateVBOs:Bool;
+	private var _sceneProgram:GLSLProgram;
+	private var _updateVBOs:Bool = true;
 	
 	public function new(context3D:Context3D, spriteSheet:LiteSpriteSheet)
 	{
-		_context3D = context3D;
+	//	_context3D = context3D;
 		_sprites = spriteSheet;
 		
 		_verteces = new Vector<Float>();
@@ -54,7 +53,12 @@ class LiteSpriteBatch
 		_uvs = new Vector<Float>();
 		
 		_children = new Vector<LiteSprite>();
-		_updateVBOs = true;
+		onContext(context3D);
+	}
+	
+	public function onContext(context3D:Context3D):Void
+	{
+		_context3D = context3D;
 		setupShaders();
 		updateTexture();
 	}
@@ -190,8 +194,8 @@ class LiteSpriteBatch
         var vertexShader = new GLSLVertexShader(vertexShaderSource, vertexAgalInfo);
         var fragmentShader = new GLSLFragmentShader(fragmentShaderSource, fragmentAgalInfo);
 
-        sceneProgram = new GLSLProgram(_context3D);
-        sceneProgram.upload(vertexShader, fragmentShader);
+        _sceneProgram = new GLSLProgram(_context3D);
+        _sceneProgram.upload(vertexShader, fragmentShader);
 	}
 	
 	private function updateTexture():Void
@@ -238,10 +242,10 @@ class LiteSpriteBatch
 		// update vertex data a kurrent
 		for (i in 0 ... nChildren) updateChildVertexData(_children[i]);
 		
-		sceneProgram.attach();
+		_sceneProgram.attach();
 		_context3D.setBlendFactors(Context3DBlendFactor.SOURCE_ALPHA, Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA);
-		sceneProgram.setVertexUniformFromMatrix("modelViewMatrix", parent._modelViewMatrix, true);
-		sceneProgram.setTextureAt("texture", _sprites.texture);
+		_sceneProgram.setVertexUniformFromMatrix("modelViewMatrix", parent.modelViewMatrix, true);
+		_sceneProgram.setTextureAt("texture", _sprites.texture);
 		
 		if (_updateVBOs)
 		{
@@ -255,8 +259,8 @@ class LiteSpriteBatch
 		
 		// a vertex adatokat minden frame-ben fel akarjuk tölteni
 		_vertexBuffer.uploadFromVector(_verteces, 0, Std.int(_verteces.length / 3));
-		sceneProgram.setVertexBufferAt("vertexPosition", _vertexBuffer, 0, Context3DVertexBufferFormat.FLOAT_3);
-		sceneProgram.setVertexBufferAt("uv", _uvBuffer, 0, Context3DVertexBufferFormat.FLOAT_2);
+		_sceneProgram.setVertexBufferAt("vertexPosition", _vertexBuffer, 0, Context3DVertexBufferFormat.FLOAT_3);
+		_sceneProgram.setVertexBufferAt("uv", _uvBuffer, 0, Context3DVertexBufferFormat.FLOAT_2);
 		_context3D.drawTriangles(_indexBuffer, 0, nChildren * 2);
 	}
 
