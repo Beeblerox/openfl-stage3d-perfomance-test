@@ -5,7 +5,7 @@
     <app main="Main" path="target/openfl" file="OpenFLStage3DTest" />
 
     <window width="800" height="600" if="desktop" />
-    <window fps="60" />
+    <window orientation="landscape" fps="60" />
 
 	<set name="SWF_VERSION" value="11.2" />
 	
@@ -17,7 +17,13 @@
 
 	<icon path="assets/nme.svg" />
     
-     <haxelib name="openfl-stage3d" />
-     <!--<haxelib name="openfl-stage3d" version="0.0.1"/>-->
+    <haxelib name="openfl-stage3d" />
+	 
+	<!-- HXCPP DEBUGGING -->
+    <haxedef name="HXCPP_DEBUG_LINK" />
+    <haxedef name="DHXCPP_STACK_TRACE" />
+    <haxedef name="HXCPP_STACK_LINE" />
+    <haxedef name="HXCPP_CHECK_POINTER" />
+    <haxedef name="HXCPP_DEBUGGER " />
 
 </project>
