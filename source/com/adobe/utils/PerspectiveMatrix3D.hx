@@ -205,9 +205,21 @@ class PerspectiveMatrix3D extends Matrix3D
 	}
 	
 	#if !flash
-	private function copyRawDataFrom(data:Vector<Float>):Void
+	private function copyRawDataFrom(vector:Vector<Float>, index:UInt = 0, useTranspose:Bool = false):Void
 	{
-		rawData = data;
+		var len:Int = vector.length;
+		var last:Int = index + len;
+		
+		for (i in index...len)
+		{
+			if (i >= 16)	break;
+			rawData[i] = vector[i - index];
+		}
+		
+		if (useTranspose)
+		{
+			this.transpose();
+		}
 	}
 	#end
 

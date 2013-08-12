@@ -13,6 +13,8 @@ import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.Lib;
 
+import Stage3dObjParser;
+
 using OpenFLStage3D;
 
 /**
