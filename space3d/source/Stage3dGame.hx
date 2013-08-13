@@ -258,7 +258,7 @@ class Stage3dGame extends Sprite
 
 		if (hasEventListener(Event.ENTER_FRAME))
 		{
-			removeEventListener(Event.ENTER_FRAME,enterFrame);
+			removeEventListener(Event.ENTER_FRAME, enterFrame);
 		}
 		
 		// Obtain the current context
@@ -327,25 +327,6 @@ class Stage3dGame extends Sprite
 
         var vertexAgalInfo = '{"varnames":{"vertexPosition":"va0","uv":"va1","col":"va2","modelViewMatrix":"vc0"},"agalasm":"m44 op, va0, vc0\\nmov v0, va0\\nmov v1, va1\\nmov v2, va2","storage":{},"types":{},"info":"","consts":{}}';
 		
-		/*
-		// A simple vertex shader which does a 3D transformation
-		// for simplicity, it is used by all four shaders
-		vertexShaderAssembler.assemble
-		( 
-			Context3DProgramType.VERTEX,
-			// 4x4 matrix multiply to get camera angle	
-			"m44 op, va0, vc0\n" +
-			// tell fragment shader about XYZ
-			"mov v0, va0\n" +
-			// tell fragment shader about UV
-			"mov v1, va1\n" +
-			// tell fragment shader about RGBA
-			"mov v2, va2\n"
-		);		
-		*/
-		
-		/////////////////////////////
-		
 		var fragmentShaderSource1 =
 			"varying vec2 vTexCoord;
 			 uniform sampler2D texture;
@@ -355,21 +336,6 @@ class Stage3dGame extends Sprite
 		
 		var fragmentAgalInfo1 = '{"varnames":{"texture":"fs0"},"agalasm":"tex ft0, v1, fs0 <2d,linear,repeat,miplinear>\\nmov oc, ft0","storage":{},"types":{},"info":"","consts":{}}';
 		
-		/*
-		// textured using UV coordinates
-		fragmentShaderAssembler1.assemble
-		( 
-			Context3DProgramType.FRAGMENT,	
-			// grab the texture color from texture 0 
-			// and uv coordinates from varying register 1
-			// and store the interpolated value in ft0
-			"tex ft0, v1, fs0 <2d,linear,repeat,miplinear>\n"+
-			// move this value to the output color
-			"mov oc, ft0\n"
-		);
-		*/
-		/////////////////////////////////////////
-		
 		var fragmentShaderSource2 =
 			"varying vec4 vTexColor;
 			 void main(void) {
@@ -377,22 +343,6 @@ class Stage3dGame extends Sprite
 			}";
 		
 		var fragmentAgalInfo2 = '{"varnames":{"texture":"fs0"},"agalasm":"sub ft0, v2, fc1\\ntex ft1, v2, fs0 <2d,linear,repeat,miplinear>\\nmov oc, v2","storage":{},"types":{},"info":"","consts":{}}';
-		
-		/*
-		// no texture, RGBA from the vertex buffer data
-		var fragmentShaderAssembler2:AGALMiniAssembler 
-			= new AGALMiniAssembler();
-		fragmentShaderAssembler2.assemble
-		( 
-			Context3DProgramType.FRAGMENT,	
-			// grab the color from the v2 register
-			// which was set in the vertex program
-			"sub ft0, v2, fc1\n" +
-			"mov oc, v2\n"
-		);
-		*/
-		
-		////////////////////////////////////////////////////////
 		
 		var fragmentShaderSource3 =
 			"varying vec2 vTexCoord;
@@ -404,23 +354,6 @@ class Stage3dGame extends Sprite
 			}";
 		
 		var fragmentAgalInfo3 = '{"varnames":{"texture":"fs0"},"agalasm":"tex ft0, v1, fs0 <2d,linear,repeat,miplinear>\\nmul ft1, v2, ft0\\nmov oc, ft1","storage":{},"types":{},"info":"","consts":{}}';
-		/*
-		// textured using UV coordinates AND colored by vertex RGB
-		var fragmentShaderAssembler3:AGALMiniAssembler 
-			= new AGALMiniAssembler();
-		fragmentShaderAssembler3.assemble
-		( 
-			Context3DProgramType.FRAGMENT,	
-			// grab the texture color from texture 0 
-			// and uv coordinates from varying register 1
-			"tex ft0, v1, fs0 <2d,linear,repeat,miplinear>\n" +	
-			// multiply by the value stored in v2 (the vertex rgb)
-			"mul ft1, v2, ft0\n" +
-			// move this value to the output color
-			"mov oc, ft1\n"
-		);
-		*/
-		////////////////////////////////////////////////////////
 		
 		var fragmentShaderSource4 =
 			"varying vec2 vTexCoord;
@@ -433,25 +366,6 @@ class Stage3dGame extends Sprite
 		
 		var fragmentAgalInfo4 = '{"varnames":{"texture":"fs0","colorMultiplier":"fc0"},"agalasm":"tex ft0, v1, fs0 <2d,linear,repeat,miplinear>\\nmul ft1, fc0, ft0\\nmov oc, ft1","storage":{},"types":{},"info":"","consts":{}}';
 		
-		/*
-		// textured using UV coordinates and 
-		// tinted using a fragment constant
-		var fragmentShaderAssembler4:AGALMiniAssembler 
-			= new AGALMiniAssembler();
-		fragmentShaderAssembler4.assemble
-		( 
-			Context3DProgramType.FRAGMENT,	
-			// grab the texture color from texture 0 
-			// and uv coordinates from varying register 1
-			"tex ft0, v1, fs0 <2d,linear,repeat,miplinear>\n" +	
-			// multiply by the value stored in fc0
-			"mul ft1, fc0, ft0\n" +
-			// move this value to the output color
-			"mov oc, ft1\n"
-		);
-		*/
-		
-		// TODO: Contrinue from here
 		var vertexShader = new GLSLVertexShader(vertexShaderSource, vertexAgalInfo);
         var fragmentShader1 = new GLSLFragmentShader(fragmentShaderSource1, fragmentAgalInfo1);
         var fragmentShader2 = new GLSLFragmentShader(fragmentShaderSource2, fragmentAgalInfo2);
@@ -509,6 +423,11 @@ class Stage3dGame extends Sprite
 
 	private function enterFrame(e:Event):Void 
 	{
+		if (context3D == null)
+		{
+			return;
+		}
+		
 		// clear scene before rendering is mandatory
 		context3D.clear(0, 0, 0);
 		// move or rotate more each frame
