@@ -361,7 +361,7 @@ class Stage3dGame extends Sprite
 			 uniform sampler2D texture;
 		     void main(void) {
 		        vec4 texColor = texture2D(texture, vTexCoord);
-				gl_FragColor = texColor * vec4(1.0, 1.0, 1.0, 1.0);
+				gl_FragColor = texColor * vec4(colorMultiplier);
 			}";
 		
 		var fragmentAgalInfo4 = '{"varnames":{"texture":"fs0","colorMultiplier":"fc0"},"agalasm":"tex ft0, v1, fs0 <2d,linear,repeat,miplinear>\\nmul ft1, fc0, ft0\\nmov oc, ft1","storage":{},"types":{},"info":"","consts":{}}';
