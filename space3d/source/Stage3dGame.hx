@@ -388,9 +388,9 @@ class Stage3dGame extends Sprite
 	private function initData():Void 
 	{
 		// parse the OBJ file and create buffers
-		myMesh = new Stage3dObjParser(Assets.getText("assets/spaceship.obj"), context3D, 1, true, true);
+		myMesh = new Stage3dObjParser(Assets.getText("assets/spaceship.object"), context3D, 1, true, true);
 		// parse the terrain mesh as well
-		terrainMesh = new Stage3dObjParser(Assets.getText("assets/terrain.obj"), context3D, 1, true, true);
+		terrainMesh = new Stage3dObjParser(Assets.getText("assets/terrain.object"), context3D, 1, true, true);
 	}		
 
 	private function renderTerrain():Void
