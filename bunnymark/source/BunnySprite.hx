@@ -46,33 +46,4 @@ class BunnySprite
 		speedX = 0.0;
 		speedY = 0.0;
 	}
-	
-	/*
-	public function get speedX() : Number 
-	{
-		return _speedX;
-	}
-	
-	public function set speedX(sx:Number) : void 
-	{
-		_speedX = sx;
-	}
-	
-	public function get speedY() : Number 
-	{
-		return _speedY;
-	}
-	
-	public function set speedY(sy:Number) : void 
-	{
-		_speedY = sy;
-	}
-	public function get sprite():GPUSprite 
-	{	
-		return gpuSprite;
-	}
-	public function set sprite(gs:GPUSprite):void {
-		gpuSprite = gs;
-	}
-	*/
 }
