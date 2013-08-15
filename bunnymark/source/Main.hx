@@ -10,6 +10,7 @@ import flash.display3D.Context3DRenderMode;
 import flash.errors.Error;
 import flash.events.ErrorEvent;
 import flash.events.Event;
+import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.geom.Rectangle;
 import flash.Lib;
@@ -17,6 +18,7 @@ import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 import flash.text.TextFieldAutoSize;
+import flash.ui.Keyboard;
 
 import lite.LiteSpriteStage;
 
@@ -201,6 +203,8 @@ class Main extends Sprite
 			_spriteStage.renderDeferred();
 
 			context3D.present();
+			
+			fps.update();
 		}
 		catch (e:Error)
 		{

@@ -41,8 +41,8 @@ import flash.text.TextFormat;
 class FPS extends TextField
 {
 	private var frameCount:Int = 0;
-	private var timer:Int;
-	private var ms_prev:Int;
+	private var timer:Int = 0;
+	private var ms_prev:Int = 0;
 	private var lastfps:Float = 60; 
 	
 	public function new(inX:Float = 10.0, inY:Float = 10.0, inCol:Int = 0x000000)
@@ -54,20 +54,15 @@ class FPS extends TextField
 		defaultTextFormat = new TextFormat("_sans", 20, 0, true);
 		text = "FPS:";
 		textColor = inCol;
-		this.addEventListener(Event.ADDED_TO_STAGE, onAddedHandler);
 		
+		timer = ms_prev = 0;
 	}
 	
-	public function onAddedHandler(e:Event):Void 
-	{
-		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-	}
-	
-	private function onEnterFrame(evt:Event):Void
+	public function update():Void
 	{
 		timer = Lib.getTimer();
 		
-		if( timer - 1000 > ms_prev )
+		if (timer - 1000 > ms_prev)
 		{
 			lastfps = Math.round(frameCount / (timer - ms_prev) * 1000);
 			ms_prev = timer;
